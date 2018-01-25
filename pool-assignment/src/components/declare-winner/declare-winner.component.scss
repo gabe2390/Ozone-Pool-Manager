@@ -1,0 +1,12 @@
+.players-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .select-players {
+        display: flex;
+        flex-direction: row;
+    }
+    .select-winner {
+        font-size: 50px;
+    }
+}

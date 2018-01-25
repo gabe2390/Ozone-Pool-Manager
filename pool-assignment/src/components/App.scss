@@ -1,0 +1,25 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .header {
+        text-align: center;
+        width: 100%;
+        color: forestgreen;
+        display: flex;
+        justify-content: space-around;
+        font-size: 50pt;
+    }
+    .selected-players {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 180px;
+    }
+    .game-container {
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+   
+}

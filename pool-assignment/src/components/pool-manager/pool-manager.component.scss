@@ -1,0 +1,9 @@
+.in-progress-container {
+    margin-top:100px;
+    display: flex;
+    flex-direction: column;
+    .players-container {
+        display: flex;
+        flex-direction: row;
+    }
+}

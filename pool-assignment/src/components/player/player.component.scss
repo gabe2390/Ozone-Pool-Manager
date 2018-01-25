@@ -1,0 +1,30 @@
+.player-card-container {
+    height: 150px;
+    width: 150px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    justify-content: space-evenly;
+    background-color: white;
+    .player-name {
+        font-size: 30px;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .player-brag {
+        font-size: 20px;
+        font-style: italic;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .player-record {
+        font-size: 20px;
+    }
+}

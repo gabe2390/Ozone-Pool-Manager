@@ -1,0 +1,9 @@
+.player-bag {
+    display: flex;
+    width: 50%;
+    flex-wrap: wrap;
+    height: 200px;
+    border: 1px solid black;
+    overflow-wrap: break-word;
+    margin: 0 50px; 
+}
