@@ -21,6 +21,7 @@ namespace pool_assignment_backend {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
             services.AddMvc ();
+            services.AddCors ();
             services.AddTransient<IPlayerManager, PlayerManager> ();
         }
 
@@ -29,7 +30,7 @@ namespace pool_assignment_backend {
             if (env.IsDevelopment ()) {
                 app.UseDeveloperExceptionPage ();
             }
-
+            app.UseCors (builder => builder.WithOrigins ("http://localhost:8080").AllowAnyHeader ());
             app.UseMvc ();
         }
     }

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using pool_assignment_backend.Models;
 
-namespace pool_assignment_backend.Controllers {
-    public interface IPlayerManager {
+namespace pool_assignment_backend.Services {
+    public interface IPlayerService {
         List<Player> GetPlayers ();
         Player CreatePlayer (Player player);
     }
-    public class PlayerManager : IPlayerManager {
+    public class PlayerService : DbContext {
         public Player CreatePlayer (Player player) {
             return new Player { Name = "Billy Bob", Brag = "I gets dem dere pool balls in dem dere holes.", Id = 1, Wins = 10, Losses = 1 };
         }

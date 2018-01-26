@@ -22,67 +22,47 @@ export default class App extends React.Component {
             loadingPlayers: true,
             gameInProgress: false,
             viewingLeaderboard: false,
-            players: [
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 5, losses: 1, name: "Billy Bob", id: 1, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 4, losses: 1, name: "Gilly Bob", id: 2, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 3, losses: 1, name: "Jilly Bob", id: 3, brag: "\"I gets dem pool balls in dem dere holes\"" },
-                { wins: 2, losses: 1, name: "Killy Bob", id: 4, brag: "\"I gets dem pool balls in dem dere holes\"" },
-            ],
+            players: [],
             selectedPlayers: []
         }
     }
-
+    componentWillMount() {
+        Modal.setAppElement('body');
+    }
+    componentDidMount() {
+        this.retrieveAllPlayers();
+    }
+    retrieveAllPlayers() {
+        axios.get("http://localhost:5000/api/players/").then((response) => {
+            this.setState(update(this.state, { $merge: { players: response.data } }))
+        }).catch(() => {
+            //TODO: error handling if data doesn't load
+            console.log("bitch");
+        });
+    }
     togglePlayerSelection() {
-        const updatedState = update(this.state, { $merge: { creatingNewPlayer: !this.state.creatingNewPlayer } });
-        this.setState(updatedState);
+        this.setState(update(this.state, { $merge: { creatingNewPlayer: !this.state.creatingNewPlayer } }));
     }
 
     createNewPlayer(newPlayer) {
-        let players = update(this.state.players, { $push: [newPlayer] });
-        let updatedState = update(this.state, { $merge: { players: players, creatingNewPlayer: false } })
-        this.setState(updatedState);
+        axios.post("http://localhost:5000/api/players", newPlayer).then(response => {
+            let players = update(this.state.players, { $push: [newPlayer] });
+            this.setState(update(this.state, { $merge: { players: players, creatingNewPlayer: false } }));
+        }).catch(() => {
+            //TODO: error handling if error occurs
+        });
     }
 
     selectPlayer(player) {
         if (this.state.selectedPlayers.length < 2 && this.state.selectedPlayers.indexOf(player) < 0) {
             let selectedPlayers = update(this.state.selectedPlayers, { $push: [player] });
-            let updatedState = update(this.state, { $merge: { selectedPlayers } });
-            this.setState(updatedState);
+            this.setState(update(this.state, { $merge: { selectedPlayers } }));
         }
     }
 
     unSelectPlayer(player) {
         let selectedPlayers = update(this.state.selectedPlayers, { $splice: [[this.state.selectedPlayers.indexOf(player), 1]] })
-        let updatedState = update(this.state, { $merge: { selectedPlayers } });
-        this.setState(updatedState);
+        this.setState(update(this.state, { $merge: { selectedPlayers } }));
     }
 
     getSelectionView(players) {
@@ -145,12 +125,6 @@ export default class App extends React.Component {
     closeLeaderBoard() {
         let updatedState = update(this.state, { $merge: { viewingLeaderboard: false } });
         this.setState(updatedState);
-    }
-
-
-
-    componentWillMount() {
-        Modal.setAppElement('body');
     }
 
     render() {
