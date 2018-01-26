@@ -6,7 +6,7 @@ export default class Leaderboard extends React.Component {
     getAllRows(players) {
         return players.map((player, index) => (
             <tr key={index}>
-                <td>{player.name}</td>
+                <td>{player.fullName}</td>
                 <td>{player.wins}</td>
                 <td>{player.losses}</td>
             </tr>

@@ -32,6 +32,7 @@ export default class App extends React.Component {
     componentDidMount() {
         this.retrieveAllPlayers();
     }
+
     retrieveAllPlayers() {
         axios.get("http://localhost:5000/api/players/").then((response) => {
             this.setState(update(this.state, { $merge: { players: response.data } }))
@@ -39,9 +40,6 @@ export default class App extends React.Component {
             //TODO: error handling if data doesn't load
             console.log("bitch");
         });
-    }
-    togglePlayerSelection() {
-        this.setState(update(this.state, { $merge: { creatingNewPlayer: !this.state.creatingNewPlayer } }));
     }
 
     createNewPlayer(newPlayer) {
@@ -52,6 +50,10 @@ export default class App extends React.Component {
             //TODO: error handling if error occurs
         });
     }
+
+    togglePlayerSelection() {
+        this.setState(update(this.state, { $merge: { creatingNewPlayer: !this.state.creatingNewPlayer } }));
+    }   
 
     selectPlayer(player) {
         if (this.state.selectedPlayers.length < 2 && this.state.selectedPlayers.indexOf(player) < 0) {
