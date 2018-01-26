@@ -35,7 +35,7 @@ export default class CreatePlayer extends React.Component {
                     <input className="input" type="text" defaultValue={""} onChange={this.updateBrag.bind(this)} placeholder="Brag a bit?" />
                 </div>
                 <div className="buttons">
-                    <button className="btn" onClick={() => { this.updatePlayerInfo() }}>Save Player</button>
+                    <button className="btn" disabled={! this.state.name} onClick={() => { this.updatePlayerInfo() }}>Save Player</button>
                     <button className="btn" onClick={() => { this.props.cancelCreatePlayer() }}>Cancel Player</button>
                 </div>
             </div>
