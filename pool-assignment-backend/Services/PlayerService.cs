@@ -3,8 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using pool_assignment_backend.Models;
 
 namespace pool_assignment_backend.Services {
-    public class PlayerService : DbContext {
+    public interface IPlayerService {
+        DbSet<Player> GetPlayers ();
+        int SaveChanges ();
+    }
+    public class PlayerService : DbContext, IPlayerService {
         public PlayerService (DbContextOptions<PlayerService> options) : base (options) { }
-        public DbSet<Player> Players { get; set; }
+        private DbSet<Player> Players { get; set; }
+
+        public DbSet<Player> GetPlayers () {
+            return Players;
+        }
     }
 }

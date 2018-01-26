@@ -9,23 +9,22 @@ using pool_assignment_backend.Services;
 namespace pool_assignment_backend.Controllers {
     [Route ("api/players")]
     public class PlayersController : Controller {
-        private readonly PlayerService _playerService;
+        private readonly IPlayerService _playerService;
 
-        public PlayersController (PlayerService playerService) {
+        public PlayersController (IPlayerService playerService) {
             _playerService = playerService;
         }
 
         [HttpGet]
         public IEnumerable<Player> Get () {
-            return _playerService.Players;
+            return _playerService.GetPlayers();
         }
 
         [HttpPost]
         public Player Post ([FromBody] Player player) {
-
-            var result = _playerService.Players.Add (player);
-            _playerService.SaveChanges();
-            return  player;
+            _playerService.GetPlayers ().Add (player);
+            _playerService.SaveChanges ();
+            return player;
         }
 
         //TODO: UPDATE AND DELETE players
