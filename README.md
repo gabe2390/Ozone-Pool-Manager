@@ -18,5 +18,6 @@ Assignment for O3 World interview using React JS, Axios, .Net Core Web API 2
 3. dotnet restore
 4. dotnet test
 
+Uses an in memory database to save players, but I included a super basic sql script to create the appropriate table.
 
 Thanks for your consideration!!!
