@@ -38,7 +38,6 @@ export default class App extends React.Component {
             this.setState(update(this.state, { $merge: { players: response.data } }))
         }).catch(() => {
             //TODO: error handling if data doesn't load
-            console.log("bitch");
         });
     }
 
