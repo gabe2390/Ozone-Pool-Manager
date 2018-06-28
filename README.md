@@ -1,5 +1,5 @@
-# O3World_PoolAssignment
-## Assignment for O3 World interview using React JS, Axios, .Net Core Web API 2
+# Ozone Pool Manager - Manage a game of pool
+## React JS, Axios, .Net Core Web API 2, Entity Framework
 
 - clone or download repo
 
